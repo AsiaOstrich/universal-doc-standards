@@ -1,8 +1,8 @@
 # Code Check-in Standards
 # 程式碼簽入檢查點標準
 
-**Version**: 1.0.0
-**Last Updated**: 2025-11-12
+**Version**: 1.2.0
+**Last Updated**: 2025-11-28
 **Applicability**: All software projects using version control
 **適用範圍**: 所有使用版本控制的軟體專案
 
@@ -267,6 +267,245 @@ git status
    - All call sites updated
    - Tests confirm identical behavior
 ```
+
+---
+
+## Commit Granularity Guidelines | Commit 粒度指引
+
+### Ideal Commit Size | 理想的 Commit 大小
+
+| Metric | Recommended | Description |
+|--------|-------------|-------------|
+| File Count | 1-10 files | Consider splitting if >10 files |
+| Lines Changed | 50-300 lines | Too large is hard to review, too small lacks meaning |
+| Scope | Single concern | One commit does one thing |
+
+| 指標 | 建議值 | 說明 |
+|------|--------|------|
+| 檔案數量 | 1-10 個 | 超過 10 個檔案應考慮拆分 |
+| 變更行數 | 50-300 行 | 過大難以 review，過小缺乏意義 |
+| 功能範圍 | 單一關注點 | 一個 commit 只做一件事 |
+
+### Splitting Principles | 拆分原則
+
+**Should be combined into one commit | 應該合併為一個 commit**:
+- Feature implementation + corresponding tests
+- Tightly related multi-file changes
+
+**Should be separate commits | 應該分開 commit**:
+- Feature A + Feature B → separate
+- Refactoring + new feature → separate
+- Bug fix + incidental refactoring → separate
+
+### Frequency Recommendations | 頻率建議
+
+| Scenario | Recommended Frequency |
+|----------|----------------------|
+| Feature Development | Commit after each testable sub-feature |
+| Bug Fix | Commit after each independent bug is fixed |
+| Refactoring | Commit after each safe refactoring step (keep tests passing) |
+
+| 情境 | 建議頻率 |
+|------|---------|
+| 功能開發 | 每完成一個可測試的子功能即 commit |
+| Bug 修復 | 每修復一個獨立的 bug 即 commit |
+| 重構 | 每完成一個安全的重構步驟即 commit（保持測試通過） |
+
+---
+
+## Collaboration Scenarios | 協作情境
+
+### Multiple Developers on Same Feature | 多人開發同一功能
+
+When multiple developers work on the same feature (e.g., frontend/backend split):
+
+當多人同時開發同一功能（例如前後端分工）:
+
+1. **Branch Strategy | 分支策略**: Create sub-branches from feature branch
+   ```
+   feature/order-book
+   ├── feature/order-book-api      (Developer A)
+   └── feature/order-book-ui       (Developer B)
+   ```
+
+2. **Check-in Rhythm | 簽入節奏**:
+   - Commit and push after each integrable unit
+   - Frequently sync with main feature branch to reduce conflicts
+
+3. **Integration Points | 整合點**:
+   - Define clear interfaces/contracts
+   - Commit interface definitions first, then implement separately
+
+### Before and After Code Review | Code Review 前後
+
+**Before Review | Review 前**:
+- Ensure all commits are complete logical units
+- Clean up commit history (squash WIP commits)
+- Write clear PR description
+
+**After Review | Review 後**:
+- After making changes based on review feedback, add new commit (don't amend already pushed commits)
+- Commit message can note: `fix(auth): adjust error handling per review feedback`
+
+### Conflict Avoidance Strategies | 避免衝突的簽入策略
+
+1. **Small batches, high frequency | 小批量、高頻率**: Small commits are easier to merge than large ones
+2. **Frequent sync | 頻繁同步**: At least once daily `git pull origin main`
+3. **Avoid long-lived branches | 避免長時間分支**: Feature branch lifecycle should not exceed 1-2 weeks
+
+---
+
+## Check-in Trigger Points | 簽入檢查觸發點
+
+### Automatic Trigger Timing | 自動觸發時機
+
+During development workflow execution, the following events should trigger check-in reminders:
+
+在開發工作流程執行過程中，以下時機應觸發簽入提醒：
+
+| Trigger | Condition | Reminder Intensity |
+|---------|-----------|-------------------|
+| Phase Complete | Completed a development phase | Suggest |
+| Checkpoint | Reached a defined checkpoint | Suggest |
+| Change Accumulation | Files ≥5 or lines ≥200 | Suggest |
+| Consecutive Skips | Skipped check-in 3 times | Warning |
+| Work Complete | Uncommitted changes before finishing | Strongly Recommend |
+
+| 觸發點 | 條件 | 提醒強度 |
+|--------|------|---------|
+| Phase 完成 | 完成一個開發階段 | 建議 |
+| Checkpoint | 到達定義的檢查點 | 建議 |
+| 變更累積 | 檔案 ≥5 個 或 行數 ≥200 行 | 建議 |
+| 連續跳過 | 連續跳過簽入 3 次 | 警告 |
+| 工作完成 | 結束前有未 commit 變更 | 強烈建議 |
+
+### Reminder Behavior | 提醒行為
+
+- **Advisory nature | 建議性質**: User can choose to skip and continue working
+- **Non-blocking | 不中斷流程**: After choosing "later", automatically continue to next stage
+- **Manual execution | 手動執行**: AI only displays git commands, **must not auto-execute** git add/commit
+
+### Reminder Format | 提醒格式
+
+```
+┌────────────────────────────────────────────────┐
+│ 🔔 Check-in Checkpoint | 簽入檢查點             │
+├────────────────────────────────────────────────┤
+│ Phase 1 completed | Phase 1 已完成             │
+│                                                │
+│ Change Statistics | 變更統計:                  │
+│   - Files: 5                                   │
+│   - Added: 180 lines                           │
+│   - Deleted: 12 lines                          │
+│                                                │
+│ Test Status: ✅ Passed                         │
+│                                                │
+│ Suggested commit message:                      │
+│   feat(module): complete Phase 1 Setup         │
+│                                                │
+│ Options:                                       │
+│   [1] Commit now (will show git commands)      │
+│   [2] Commit later, continue to next Phase     │
+│   [3] View detailed changes                    │
+└────────────────────────────────────────────────┘
+```
+
+### Skip Tracking | 跳過後的追蹤
+
+When user chooses "commit later":
+
+當用戶選擇「稍後再 commit」時：
+
+1. **Record skip count | 記錄跳過次數**
+2. **After 3 consecutive skips | 連續跳過 3 次** → Display warning:
+   ```
+   ⚠️ Warning: You have skipped check-in 3 times consecutively
+   Current accumulated changes: 15 files, +520 lines
+   Recommend committing soon to avoid changes becoming too large to review
+   ```
+3. **Before work completion | 工作結束前** → If uncommitted changes exist, strongly recommend check-in
+
+---
+
+## Special Scenarios | 特殊情境處理
+
+### Emergency Leave (End of Day) | 緊急離開
+
+When you need to leave temporarily with work incomplete:
+
+當需要暫時離開但工作未完成時:
+
+**Option 1: Git Stash (Recommended) | 選項 1: Git Stash（推薦）**
+```bash
+# Stash incomplete work
+git stash save "WIP: matching engine - pending price validation"
+
+# Resume next day
+git stash pop
+```
+
+**Option 2: WIP Branch | 選項 2: WIP 分支**
+```bash
+# Create temporary branch
+git checkout -b wip/order-matching-temp
+git add .
+git commit -m "WIP: matching engine progress save (do not merge)"
+
+# Return to main branch next day
+git checkout feature/order-matching
+git cherry-pick <wip-commit>
+```
+
+⚠️ **Prohibited | 禁止**: Committing WIP code directly on feature branch
+
+### Experimental Development | 實驗性開發
+
+When doing technical exploration or POC:
+
+進行技術探索或 POC 時:
+
+1. **Create experiment branch | 建立實驗分支**
+   ```bash
+   git checkout -b experiment/redis-stream-poc
+   ```
+
+2. **Free commits during experiment | 實驗中可自由 commit** (no strict format required)
+
+3. **After experiment succeeds | 實驗成功後**:
+   - Clean up commit history
+   - Squash into meaningful commits
+   - Merge to feature branch
+
+4. **After experiment fails | 實驗失敗後**:
+   - Document lessons learned (optional)
+   - Delete experiment branch
+
+### Hotfix | 緊急修復
+
+For production emergency issues:
+
+生產環境緊急問題:
+
+1. **Create hotfix branch from main | 從 main 建立 hotfix 分支**
+   ```bash
+   git checkout main
+   git checkout -b hotfix/critical-null-pointer
+   ```
+
+2. **Minimize changes | 最小化變更**: Only fix the problem, no additional refactoring
+
+3. **Quick verification | 快速驗證**: Ensure tests pass
+
+4. **Mark urgency in commit message | Commit 訊息標註緊急性**:
+   ```
+   fix(matching): [URGENT] fix null pointer causing match failures
+
+   - Issue: Market orders missing price field causes NullPointerException
+   - Impact: All market orders cannot be matched
+   - Fix: Add null check and default value handling
+
+   Fixes #456
+   ```
 
 ---
 
@@ -654,6 +893,7 @@ git commit -m "feat(module-c): add export to CSV feature"
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.2.0 | 2025-11-28 | Added: Commit granularity guidelines, collaboration scenarios, check-in trigger points, special scenarios (emergency leave, experimental dev, hotfix) |
 | 1.0.0 | 2025-11-12 | Initial standard published |
 
 ---
