@@ -1,8 +1,8 @@
 # Code Check-in Standards
 # 程式碼簽入檢查點標準
 
-**Version**: 1.2.0
-**Last Updated**: 2025-11-28
+**Version**: 1.2.2
+**Last Updated**: 2025-12-04
 **Applicability**: All software projects using version control
 **適用範圍**: 所有使用版本控制的軟體專案
 
@@ -161,6 +161,8 @@ dotnet list package --vulnerable
   - Entry added for this change
   - Version number correct
   - Breaking changes highlighted
+  - Follow exclusion rules in `versioning.md` (ignore `.gitignore` directories)
+  - 遵循 `versioning.md` 排除規則（忽略 `.gitignore` 目錄）
 
 **Documentation Formats | 文件格式**:
 ```
@@ -798,7 +800,7 @@ jobs:
   quality:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Build
         run: npm run build
@@ -893,6 +895,8 @@ git commit -m "feat(module-c): add export to CSV feature"
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.2.2 | 2025-12-04 | Updated: GitHub Actions checkout to v4 |
+| 1.2.1 | 2025-12-04 | Added: Cross-reference to versioning.md CHANGELOG exclusion rules |
 | 1.2.0 | 2025-11-28 | Added: Commit granularity guidelines, collaboration scenarios, check-in trigger points, special scenarios (emergency leave, experimental dev, hotfix) |
 | 1.0.0 | 2025-11-12 | Initial standard published |
 

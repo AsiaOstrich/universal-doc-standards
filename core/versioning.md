@@ -1,8 +1,8 @@
 # Semantic Versioning Standard
 # 語義化版本標準
 
-**Version**: 1.0.0
-**Last Updated**: 2025-11-12
+**Version**: 1.1.1
+**Last Updated**: 2025-12-04
 **Applicability**: All software projects with versioned releases
 **適用範圍**: 所有有版本發布的軟體專案
 
@@ -260,6 +260,284 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 [2.0.0]: https://github.com/user/repo/compare/v1.5.2...v2.0.0
 [1.5.2]: https://github.com/user/repo/releases/tag/v1.5.2
 ```
+
+### Exclusion Rules | 排除規則
+
+CHANGELOG **不應**記錄以下類型的變更：
+
+#### 1. 被 `.gitignore` 排除的目錄
+
+被版本控制排除的目錄不會被簽入，因此不應記錄在 CHANGELOG 中。
+
+**原則**: 任何在專案 `.gitignore` 中列出的目錄或檔案，都不應記錄在 CHANGELOG 中。
+
+**常見排除類別 (範例)**:
+
+| 類別 | 常見目錄/檔案 | 原因 |
+|------|--------------|------|
+| AI 協作輔助 | `.claude/`, `.cursor/`, `.ai/` | 本地開發輔助，不納入版控 |
+| 開發規範 | `.standards/`, `docs/internal/` | 本地規範文件，不納入版控 |
+| 建置輸出 | `dist/`, `build/`, `out/` | 建置產物，不納入版控 |
+| 大型資料 | `data/`, `datasets/` | 資料檔案，不納入版控 |
+
+**檢查方式**:
+```bash
+# 產生 CHANGELOG 前，檢查專案的 .gitignore 排除項目
+cat .gitignore | grep -E "^[^#*]" | head -20
+```
+
+**Note**: 每個專案應根據自己的 `.gitignore` 設定來決定排除項目。上表僅為常見範例。
+
+#### 2. 建置產物與暫存檔案
+
+以下類型的變更也不應記錄：
+
+- `bin/`, `obj/`, `Release/`, `Debug/` 等建置輸出
+- `*.log`, `*.tmp` 等暫存檔案
+- `node_modules/`, `packages/` 等依賴目錄
+
+#### 3. 環境與設定檔案（敏感資料）
+
+包含敏感資料的檔案不應記錄：
+
+- `*.env`, `.env.*` 環境變數檔案
+- `*.local.json`, `*.local.yaml` 本地設定檔案 (如 .NET 的 `appsettings.*.local.json`)
+- `*.pem`, `*.key`, `*.p12` 金鑰與憑證檔案
+- `credentials.*`, `secrets.*` 憑證檔案
+
+### Best Practice | 最佳實踐
+
+產生 CHANGELOG 時應遵循以下流程：
+
+1. **列出變更 commits**
+   ```bash
+   git log main..HEAD --oneline
+   ```
+
+2. **排除不需記錄的 commits**
+   - 含「gitignore」、「版控」、「雜項(版控)」類型的 commits
+   - 僅修改被排除目錄的 commits
+
+3. **分類記錄**
+   - 只記錄會被簽入版本庫的實際程式碼或文件變更
+   - 確保所有記錄的檔案路徑在版本庫中存在
+
+4. **驗證記錄**
+   ```bash
+   # 確認記錄的路徑存在於版本庫
+   git ls-files | grep -E "path/to/file"
+   ```
+
+---
+
+## Release Process | 發布流程
+
+### Overview | 流程概覽
+
+完整的 Release 流程包含 5 個階段：
+
+1. **Pre-release Diagnosis** (診斷階段) - 強制性
+2. **Environment Preparation** (環境準備)
+3. **Package Generation** (打包生成)
+4. **Deployment Execution** (部署執行)
+5. **Post-release Verification** (驗證階段)
+
+### Phase 1: Pre-release Diagnosis | 診斷階段 ⚠️ 強制性
+
+**目的**: 在生成升級包前，評估目標伺服器的環境狀態
+
+**檢查項目**:
+- 系統工具版本
+- 必要驅動程式
+- 磁碟空間
+- 資料庫連線
+- 應用程式版本
+- 配置項完整性
+
+**通過條件** (Quality Gate):
+- ✅ 所有必要工具已安裝
+- ✅ 磁碟空間充足 (至少 500MB)
+- ✅ 資料庫連線正常
+- ✅ 無系統級錯誤
+
+**失敗處理**:
+- 若診斷失敗，執行環境準備 (Phase 2)
+- 修復後重新執行診斷
+- 不得跳過診斷直接打包
+
+---
+
+### Phase 2: Environment Preparation | 環境準備
+
+**目的**: 依照診斷報告結果，安裝缺失的工具和驅動
+
+**驗證標準**:
+- ✅ 所有診斷項目通過
+- ✅ 資料庫連線測試成功
+- ✅ 驗證工具無報錯
+
+---
+
+### Phase 3: Package Generation | 打包生成
+
+**目的**: 生成包含最新版本的升級包
+
+**執行步驟**:
+```bash
+# 1. 確認當前分支和版本
+git branch
+git describe --tags
+
+# 2. 生成升級包 (使用專案提供的打包腳本)
+./tools/generate-upgrade-package.sh -v v1.2.1 -o ./dist
+
+# 3. 驗證升級包內容
+tar -tzf dist/upgrade-package-*.tar.gz | head -20
+```
+
+#### Upgrade Package Naming | 升級包命名規範
+
+**格式**: `{PROJECT}-upgrade-v{VERSION}-{DATE}.tar.gz`
+
+| 元素 | 說明 | 範例 |
+|------|------|------|
+| `{PROJECT}` | 專案名稱 | `MyProject` |
+| `{VERSION}` | 版本號（與 Git tag 一致） | `1.2.1`, `2.0.0-beta.1` |
+| `{DATE}` | 打包日期 (YYYYMMDD) | `20251128` |
+
+**範例**:
+```
+MyProject-upgrade-v1.2.1-20251127.tar.gz
+MyProject-upgrade-v2.0.0-beta.1-20251201.tar.gz
+```
+
+---
+
+### Phase 4: Deployment Execution | 部署執行
+
+**目的**: 在目標伺服器執行升級
+
+**執行步驟**:
+```bash
+# 1. 上傳升級包到目標伺服器
+scp upgrade-package-*.tar.gz user@target:/tmp/
+
+# 2. 解壓升級包
+cd /tmp
+tar -xzf upgrade-package-*.tar.gz
+cd upgrade-package-*/
+
+# 3. Dry-run 測試 (強烈建議)
+sudo ./upgrade.sh --dry-run
+
+# 4. 正式升級
+sudo ./upgrade.sh
+```
+
+**部署驗證**:
+- ✅ 備份已建立
+- ✅ 服務停止成功
+- ✅ 檔案部署成功
+- ✅ Schema 遷移成功 (若適用)
+- ✅ 服務啟動成功
+
+---
+
+### Phase 5: Post-release Verification | 驗證階段
+
+**目的**: 確認升級成功，應用程式正常運行
+
+**檢查項目**:
+```bash
+# 1. 檢查服務狀態
+systemctl status your-service
+
+# 2. 檢查應用程式版本
+curl http://localhost:PORT/api/version
+
+# 3. 檢查日誌無錯誤
+tail -100 /path/to/app.log | grep -i error
+```
+
+**成功標準**:
+- ✅ 服務正常運行
+- ✅ API 回應正確版本號
+- ✅ 日誌無致命錯誤
+- ✅ 功能驗證通過
+
+---
+
+### Release Checklist | 發布檢查清單
+
+**Pre-release (診斷與準備)**:
+- [ ] 執行伺服器診斷
+- [ ] 診斷報告通過所有檢查項目
+- [ ] 環境準備完成 (若有缺失)
+- [ ] 環境驗證工具通過
+
+**Release (打包與部署)**:
+- [ ] 升級包生成成功
+- [ ] 升級包內容驗證通過
+- [ ] Dry-run 測試無異常
+- [ ] 備份計劃已準備
+- [ ] 回滾計劃已準備
+
+**Post-release (驗證與監控)**:
+- [ ] 服務啟動成功
+- [ ] 版本號正確
+- [ ] 功能驗證通過
+- [ ] 日誌無異常
+
+---
+
+### Quality Gates | 品質門檻
+
+以下檢查點**必須通過**，否則不得進入下一階段：
+
+| 階段 | 門檻 | 失敗處理 |
+|------|------|---------|
+| **Diagnosis** | 診斷報告無錯誤 | 環境準備 |
+| **Preparation** | 驗證工具通過 | 修復並重新驗證 |
+| **Packaging** | 升級包結構完整 | 重新打包 |
+| **Deployment** | Dry-run 無異常 | 分析日誌並修正 |
+| **Verification** | 服務正常運行 | 回滾 |
+
+---
+
+### Rollback Plan | 回滾計劃
+
+若升級失敗，執行以下回滾步驟：
+
+```bash
+# 1. 停止服務
+sudo systemctl stop your-service
+
+# 2. 還原備份
+BACKUP_PATH="/path/to/backup-$(date +%Y%m%d)"
+sudo rm -rf /path/to/app
+sudo mv "$BACKUP_PATH" /path/to/app
+
+# 3. 重啟服務
+sudo systemctl start your-service
+
+# 4. 驗證回滾成功
+sudo systemctl status your-service
+```
+
+---
+
+### Compliance | 合規性
+
+**強制性要求**:
+- ⚠️ **不得跳過診斷階段**
+- ⚠️ **不得跳過 dry-run 測試**
+- ⚠️ **必須留存診斷報告**
+- ⚠️ **必須準備回滾計劃**
+
+**審計追蹤**:
+- 所有 Release 文檔留存至少 12 個月
+- 診斷報告與 Git Tag 關聯
+- 升級日誌保存完整
 
 ---
 
@@ -524,6 +802,8 @@ semver.major('2.3.1');  // 2
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.1.1 | 2025-12-04 | Refactored: CHANGELOG exclusion rules to be more generic (removed project-specific directories) |
+| 1.1.0 | 2025-12-04 | Added: CHANGELOG exclusion rules, Release Process section |
 | 1.0.0 | 2025-11-12 | Initial versioning standard |
 
 ---

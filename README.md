@@ -49,31 +49,20 @@ universal-doc-standards/
 │
 ├── extensions/                     # Optional extensions
 │   ├── languages/                 # Language-specific standards
-│   │   ├── csharp-style.md
-│   │   ├── typescript-style.md
-│   │   ├── python-style.md
-│   │   └── _template.md
+│   │   └── csharp-style.md        # ✅ C# coding conventions
 │   ├── frameworks/                # Framework-specific standards
-│   │   ├── dotnet.md
-│   │   ├── spring-boot.md
-│   │   └── _template.md
+│   │   └── (coming soon)
 │   ├── locales/                   # Locale-specific standards
-│   │   ├── zh-tw.md               # Traditional Chinese
-│   │   └── _template.md
+│   │   └── zh-tw.md               # ✅ Traditional Chinese
 │   └── domains/                   # Domain-specific standards
-│       ├── fintech.md
-│       ├── healthcare.md
-│       └── _template.md
+│       └── (coming soon)
 │
 ├── templates/                      # Project document templates
-│   ├── CLAUDE.md.template         # AI assistant guidance
-│   ├── README.md.template         # Project README
-│   ├── CONTRIBUTING.md.template   # Contribution guide
-│   ├── CHANGELOG.md.template      # Change log
+│   ├── requirement-document-template.md  # ✅ Requirement doc format
+│   ├── requirement-checklist.md          # ✅ Requirement checklist
+│   ├── requirement-template.md           # ✅ Blank requirement template
 │   └── docs/
-│       ├── api-reference.md.template
-│       ├── architecture.md.template
-│       └── INDEX.md.template
+│       └── (coming soon)
 │
 ├── integrations/                   # Tool integrations
 │   └── openspec/                  # OpenSpec framework
@@ -338,7 +327,7 @@ jobs:
   quality:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Validate Commit Messages
         run: npx commitlint --from HEAD~1 --to HEAD --verbose

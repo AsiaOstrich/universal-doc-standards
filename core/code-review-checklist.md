@@ -1,8 +1,8 @@
 # Code Review Checklist
 # 程式碼審查檢查清單
 
-**Version**: 1.0.0
-**Last Updated**: 2025-11-12
+**Version**: 1.0.2
+**Last Updated**: 2025-12-04
 **Applicability**: All software projects with code review processes
 **適用範圍**: 所有進行程式碼審查的軟體專案
 
@@ -228,6 +228,8 @@ This standard provides a comprehensive checklist for reviewing code changes, ens
   - Entry added for change
   - Breaking changes highlighted
   - Version number correct
+  - Follow exclusion rules in `versioning.md` (ignore `.gitignore` directories)
+  - 遵循 `versioning.md` 排除規則（忽略 `.gitignore` 目錄）
 
 ---
 
@@ -358,7 +360,7 @@ jobs:
   quality:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # Build check
       - name: Build
@@ -594,6 +596,8 @@ Comment Prefixes:
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.0.2 | 2025-12-04 | Updated: GitHub Actions checkout to v4 |
+| 1.0.1 | 2025-12-04 | Added: Cross-reference to versioning.md CHANGELOG exclusion rules |
 | 1.0.0 | 2025-11-12 | Initial code review checklist |
 
 ---
