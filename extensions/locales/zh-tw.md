@@ -1,8 +1,8 @@
 # Traditional Chinese (Taiwan) Locale Standard
 # 繁體中文（台灣）地區規範
 
-**Version**: 1.0.0
-**Last Updated**: 2025-11-12
+**Version**: 1.1.0
+**Last Updated**: 2025-12-05
 **Applicability**: Projects with Traditional Chinese documentation or Taiwanese teams
 **適用範圍**: 使用繁體中文文件或台灣團隊的專案
 
@@ -293,8 +293,9 @@ Use Traditional Chinese types for Taiwan-based teams:
 | `效能` | perf | 效能優化 |
 | `建置` | build | 建置系統 |
 | `整合` | ci | CI/CD 變更 |
-| `升級` | chore | 依賴升級 |
+| `維護` | chore | 維護任務 |
 | `回退` | revert | 回退提交 |
+| `安全` | security | 安全漏洞修復 |
 
 ---
 
@@ -622,6 +623,7 @@ Maintain a **terminology glossary** for consistent Chinese translations:
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.1.0 | 2025-12-05 | Sync with commit-message-guide.md v1.2.0: Fix chore→維護 mapping; Add security/安全 type 與 commit-message-guide.md v1.2.0 同步：修正 chore→維護 對照；新增 security/安全 類型 |
 | 1.0.0 | 2025-11-12 | Initial Traditional Chinese standard |
 
 ---

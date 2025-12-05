@@ -1,8 +1,8 @@
 # C# Coding Style Guide
 # C# 程式碼風格指南
 
-**Version**: 1.0.0
-**Last Updated**: 2025-11-25
+**Version**: 1.0.1
+**Last Updated**: 2025-12-05
 **Applicability**: All C# projects
 **適用範圍**: 所有 C# 專案
 
@@ -408,10 +408,10 @@ public class UserService : IUserService
 
 ## Related Standards | 相關標準
 
-- [Anti-Hallucination Standard](anti-hallucination.md) - AI 協作防幻覺標準
-- [Code Check-in Standards](checkin-standards.md) - 程式碼簽入檢查點標準
-- [Commit Message Guide](commit-message-guide.md) - Commit 訊息規範
-- [Traditional Chinese Language Guide](zh-tw.md) - 繁體中文語言規範
+- [Anti-Hallucination Standard](../../core/anti-hallucination.md) - AI 協作防幻覺標準
+- [Code Check-in Standards](../../core/checkin-standards.md) - 程式碼簽入檢查點標準
+- [Commit Message Guide](../../core/commit-message-guide.md) - Commit 訊息規範
+- [Traditional Chinese Language Guide](../locales/zh-tw.md) - 繁體中文語言規範
 
 ---
 
@@ -440,6 +440,23 @@ public class UserService : IUserService
 │  ❌ Empty catch         │  catch { }                    │
 └─────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## Version History | 版本歷史
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 1.0.1 | 2025-12-05 | Fix related standards paths 修正相關標準連結路徑 |
+| 1.0.0 | 2025-11-25 | Initial C# style guide |
+
+---
+
+## License | 授權
+
+This standard is released under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+本標準以 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 授權發布。
 
 ---
 

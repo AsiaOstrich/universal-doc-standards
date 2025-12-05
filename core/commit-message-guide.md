@@ -1,7 +1,7 @@
 # Commit Message Guide
 # Commit 訊息規範指南
 
-**Version**: 1.1.0
+**Version**: 1.2.0
 **Last Updated**: 2025-12-05
 **Applicability**: All projects using Git version control
 **適用範圍**: 所有使用 Git 版本控制的專案
@@ -59,6 +59,7 @@ Standardized commit messages improve code review efficiency, facilitate automate
 | `ci` | CI/CD pipeline changes | CI/CD 管道變更 |
 | `chore` | Maintenance tasks | 維護任務 |
 | `revert` | Revert previous commit | 回退先前提交 |
+| `security` | Security vulnerability fix | 安全漏洞修復 |
 
 ### Option B: Traditional Chinese (For Taiwanese Teams) | 繁體中文（台灣團隊適用）
 
@@ -73,8 +74,9 @@ Standardized commit messages improve code review efficiency, facilitate automate
 | `效能` | 效能改進 | perf |
 | `建置` | 建置系統或依賴 | build |
 | `整合` | CI/CD 管道變更 | ci |
-| `升級` | 依賴升級 | chore |
+| `維護` | 維護任務 | chore |
 | `回退` | 回退先前提交 | revert |
+| `安全` | 安全漏洞修復 | security |
 
 ### Option C: Bilingual Mode (Recommended) | 雙語對照模式（推薦）
 
@@ -112,17 +114,25 @@ Implement Google OAuth2 authentication flow for user login.
 Closes #123
 ```
 
-**Project Decision Point**: Document your choice in `CONTRIBUTING.md`:
+**Project Decision Point**: Document your choice in `CONTRIBUTING.md` (choose ONE):
+
+**專案決策點**: 在 `CONTRIBUTING.md` 中記錄你的選擇（選擇其一）：
+
 ```markdown
 ## Commit Message Language
+
+<!-- Choose ONE of the following options: -->
+<!-- 選擇以下其中一個選項： -->
+
+<!-- Option A: English -->
 This project uses **English** commit types (feat, fix, refactor, etc.)
 本專案使用**英文** commit 類型（feat, fix, refactor 等）
 
-## Commit Message Language
+<!-- Option B: Traditional Chinese -->
 This project uses **Traditional Chinese** commit types (新增, 修正, 重構, etc.)
 本專案使用**繁體中文** commit 類型（新增、修正、重構等）
 
-## Commit Message Language
+<!-- Option C: Bilingual Mode -->
 This project uses **Bilingual Mode** with English types/scopes and bilingual subject/body.
 本專案使用**雙語對照模式**，type/scope 使用英文，subject/body 採用雙語對照。
 ```
@@ -134,6 +144,17 @@ This project uses **Bilingual Mode** with English types/scopes and bilingual sub
 Scope indicates which part of the codebase is affected. Use short, recognizable names.
 
 範圍指出程式碼庫的哪個部分受影響。使用簡短、可識別的名稱。
+
+### Naming Rules | 命名規則
+
+1. **Use lowercase**: All scopes should be lowercase (`auth`, not `Auth`)
+   **使用小寫**: 所有範圍應使用小寫（`auth`，而非 `Auth`）
+
+2. **Use hyphen for multi-word**: Separate words with hyphens (`user-profile`, not `userProfile`)
+   **多字詞用連字號**: 使用連字號分隔多字詞（`user-profile`，而非 `userProfile`）
+
+3. **Keep it short**: 1-2 words maximum
+   **保持簡短**: 最多 1-2 個單詞
 
 ### Common Scopes | 常見範圍
 
@@ -182,8 +203,8 @@ database, config, middleware, api, tests, docs
 3. **Capitalization**: First letter capitalized
    **大寫**: 首字母大寫
 
-4. **No period**: Don't end with a period
-   **無句點**: 結尾不加句點
+4. **No period**: Don't end with a period (Exception: Bilingual Mode uses period as separator)
+   **無句點**: 結尾不加句點（例外：雙語模式使用句點作為分隔符）
 
 5. **Language**: Follow project policy (English or native language)
    **語言**: 遵循專案政策（英文或母語）
@@ -239,20 +260,46 @@ Use the body to explain **WHY** the change was made, not **WHAT** was changed (t
 
 ### Body Template | 主體範本
 
+Use contextual headers based on the change type. Common patterns:
+
+根據變更類型使用適當的標題。常見模式：
+
+**For features | 新功能**:
+```
+Why this feature is needed:
+What this implements:
+Technical notes:
+```
+
+**For bug fixes | 修復**:
+```
+Why this occurred:
+What this fix does:
+Testing:
+```
+
+**For refactoring | 重構**:
+```
+Why this refactoring:
+What this changes:
+Migration:
+```
+
+**Generic template | 通用範本**:
 ```
 <Subject line>
 
 <Blank line>
 
-Why this change is needed:
+Why:
 - Reason 1
 - Reason 2
 
-What this change does:
+What:
 - Change 1
 - Change 2
 
-Additional context:
+Notes:
 - Context or considerations
 ```
 
@@ -752,7 +799,7 @@ Add to `CONTRIBUTING.md`:
 ## Commit Message Format
 
 ### Type Language
-This project uses **[English/Traditional Chinese]** commit types.
+This project uses **[English / Traditional Chinese / Bilingual 雙語對照]** commit types.
 
 ### Allowed Types
 - feat / 新增: New features
@@ -764,6 +811,7 @@ This project uses **[English/Traditional Chinese]** commit types.
 - build / 建置: Build system
 - ci / 整合: CI/CD changes
 - chore / 維護: Maintenance
+- security / 安全: Security fixes
 
 ### Allowed Scopes
 - auth: Authentication module
@@ -808,6 +856,7 @@ Closes #123
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.2.0 | 2025-12-05 | Fix Option B type mapping (chore→維護); Add security type; Add scope naming rules; Clarify bilingual period exception; Improve templates 修正 Option B 類型對照（chore→維護）；新增 security 類型；新增 scope 命名規則；釐清雙語句點例外；改善範本 |
 | 1.1.0 | 2025-12-05 | Add Bilingual Mode (Option C) with examples 新增雙語對照模式（選項 C）與範例 |
 | 1.0.0 | 2025-11-12 | Initial guide published |
 

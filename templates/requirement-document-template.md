@@ -1,6 +1,6 @@
 # 需求確認書格式規範
 
-**版本**: 1.0
+**版本**: 1.0.1
 **建立日期**: 2025-01-13
 **適用專案**: All software projects | 所有軟體專案
 **文件類型**: 開發規範
@@ -568,10 +568,10 @@ git commit -m "文件(需求): 新增 [功能名稱] 需求確認書 v1.0"
 
 ## 九、相關規範文件
 
-- [Commit 訊息規範](commit-message-guide.md) - 簽入需求文件時使用
-- [繁體中文語言規範](zh-tw.md) - 文件撰寫語言指引
-- [文件結構標準](documentation-structure.md) - 整體文件組織
-- [Code Review 檢查清單](code-review-checklist.md) - 實作完成後使用
+- [Commit 訊息規範](../core/commit-message-guide.md) - 簽入需求文件時使用
+- [繁體中文語言規範](../extensions/locales/zh-tw.md) - 文件撰寫語言指引
+- [文件結構標準](../core/documentation-structure.md) - 整體文件組織
+- [Code Review 檢查清單](../core/code-review-checklist.md) - 實作完成後使用
 
 ---
 
@@ -586,6 +586,6 @@ git commit -m "文件(需求): 新增 [功能名稱] 需求確認書 v1.0"
 
 ---
 
-**文件版本**: 1.0
-**最後更新**: 2025-01-13
+**文件版本**: 1.0.1
+**最後更新**: 2025-12-05
 **維護者**: Universal Doc Standards Community
