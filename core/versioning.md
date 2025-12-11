@@ -1,8 +1,8 @@
 # Semantic Versioning Standard
 # 語義化版本標準
 
-**Version**: 1.1.1
-**Last Updated**: 2025-12-04
+**Version**: 1.1.2
+**Last Updated**: 2025-12-11
 **Applicability**: All software projects with versioned releases
 **適用範圍**: 所有有版本發布的軟體專案
 
@@ -401,14 +401,14 @@ tar -tzf dist/upgrade-package-*.tar.gz | head -20
 
 | 元素 | 說明 | 範例 |
 |------|------|------|
-| `{PROJECT}` | 專案名稱 | `MyProject` |
+| `{PROJECT}` | 專案名稱（替換為實際專案名） | `my-app`, `api-server` |
 | `{VERSION}` | 版本號（與 Git tag 一致） | `1.2.1`, `2.0.0-beta.1` |
 | `{DATE}` | 打包日期 (YYYYMMDD) | `20251128` |
 
-**範例**:
+**範例**（將 `{PROJECT}` 替換為您的專案名稱）:
 ```
-MyProject-upgrade-v1.2.1-20251127.tar.gz
-MyProject-upgrade-v2.0.0-beta.1-20251201.tar.gz
+{PROJECT}-upgrade-v1.2.1-20251127.tar.gz
+{PROJECT}-upgrade-v2.0.0-beta.1-20251201.tar.gz
 ```
 
 ---
@@ -802,6 +802,7 @@ semver.major('2.3.1');  // 2
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.1.2 | 2025-12-11 | Improved: Upgrade package naming example to use generic placeholders instead of hardcoded project names |
 | 1.1.1 | 2025-12-04 | Refactored: CHANGELOG exclusion rules to be more generic (removed project-specific directories) |
 | 1.1.0 | 2025-12-04 | Added: CHANGELOG exclusion rules, Release Process section |
 | 1.0.0 | 2025-11-12 | Initial versioning standard |

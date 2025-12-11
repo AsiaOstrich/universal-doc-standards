@@ -1,8 +1,8 @@
 # Testing Standards
 # 測試標準
 
-**Version**: 1.1.0
-**Last Updated**: 2025-12-05
+**Version**: 1.1.1
+**Last Updated**: 2025-12-11
 **Applicability**: All software projects
 **適用範圍**: 所有軟體專案
 
@@ -355,9 +355,12 @@ Examples:
 ### Example | 範例
 
 ```csharp
-// System Test Example: Complete Order Flow
+// System Test Example: Complete Resource Processing Flow
+// 系統測試範例：完整資源處理流程
+// Note: Replace {Resource}, {Item}, {Action} with your domain concepts
+// 注意：將 {Resource}, {Item}, {Action} 替換為您的領域概念
 [TestClass]
-public class OrderProcessingSystemTests
+public class ResourceProcessingSystemTests
 {
     private HttpClient _client;
     private TestEnvironment _env;
@@ -370,36 +373,36 @@ public class OrderProcessingSystemTests
     }
 
     [TestMethod]
-    public async Task ProcessOrder_CompleteFlow_OrderFulfilledSuccessfully()
+    public async Task ProcessResource_CompleteFlow_CompletedSuccessfully()
     {
         // Arrange: 建立測試資料
-        var product = await _env.CreateTestProduct(price: 100);
-        var customer = await _env.CreateTestCustomer();
+        var item = await _env.CreateTestItem(value: 100);
+        var user = await _env.CreateTestUser();
 
-        // Act: 執行完整訂單流程
-        // Step 1: 加入購物車
-        var cartResponse = await _client.PostAsync("/api/cart/add",
-            new { productId = product.Id, quantity = 2 });
-        Assert.AreEqual(HttpStatusCode.OK, cartResponse.StatusCode);
+        // Act: 執行完整處理流程
+        // Step 1: 建立請求
+        var requestResponse = await _client.PostAsync("/api/requests",
+            new { itemId = item.Id, quantity = 2 });
+        Assert.AreEqual(HttpStatusCode.OK, requestResponse.StatusCode);
 
-        // Step 2: 建立訂單
-        var orderResponse = await _client.PostAsync("/api/orders",
-            new { cartId = cartResponse.CartId, shippingAddress = customer.Address });
-        var order = await orderResponse.Content.ReadAsAsync<Order>();
-        Assert.AreEqual(HttpStatusCode.Created, orderResponse.StatusCode);
+        // Step 2: 提交處理
+        var processResponse = await _client.PostAsync("/api/processes",
+            new { requestId = requestResponse.RequestId, userId = user.Id });
+        var process = await processResponse.Content.ReadAsAsync<Process>();
+        Assert.AreEqual(HttpStatusCode.Created, processResponse.StatusCode);
 
-        // Step 3: 處理付款
-        var paymentResponse = await _client.PostAsync($"/api/orders/{order.Id}/pay",
-            new { paymentMethod = "credit_card", amount = 200 });
-        Assert.AreEqual(HttpStatusCode.OK, paymentResponse.StatusCode);
+        // Step 3: 確認完成
+        var confirmResponse = await _client.PostAsync($"/api/processes/{process.Id}/confirm",
+            new { confirmationType = "standard", amount = 200 });
+        Assert.AreEqual(HttpStatusCode.OK, confirmResponse.StatusCode);
 
         // Assert: 驗證最終狀態
-        var finalOrder = await _client.GetAsync($"/api/orders/{order.Id}");
-        var result = await finalOrder.Content.ReadAsAsync<Order>();
+        var finalProcess = await _client.GetAsync($"/api/processes/{process.Id}");
+        var result = await finalProcess.Content.ReadAsAsync<Process>();
 
-        Assert.AreEqual(OrderStatus.Paid, result.Status);
+        Assert.AreEqual(ProcessStatus.Completed, result.Status);
         Assert.AreEqual(200, result.TotalAmount);
-        Assert.IsNotNull(result.PaymentConfirmation);
+        Assert.IsNotNull(result.Confirmation);
     }
 }
 ```
@@ -953,6 +956,7 @@ public void MethodName_Scenario_ExpectedBehavior()
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.1.1 | 2025-12-11 | Improved: System test example to use generic domain concepts instead of specific business terminology |
 | 1.1.0 | 2025-12-05 | Add test environment isolation section (venv, containers) |
 | 1.0.0 | 2025-12-05 | Initial testing standards with UT/IT/ST/E2E coverage |
 
