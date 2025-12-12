@@ -1,8 +1,8 @@
 # Traditional Chinese (Taiwan) Locale Standard
 # 繁體中文（台灣）地區規範
 
-**Version**: 1.1.0
-**Last Updated**: 2025-12-05
+**Version**: 1.2.0
+**Last Updated**: 2025-12-12
 **Applicability**: Projects with Traditional Chinese documentation or Taiwanese teams
 **適用範圍**: 使用繁體中文文件或台灣團隊的專案
 
@@ -52,6 +52,74 @@ This standard defines language usage guidelines for projects with Traditional Ch
 | **Configuration** |
 | Config keys | English | Standard practice | `maxRetryCount` ✅ |
 | Config comments | 繁體中文 | Explain to team | `# 最大重試次數` ✅ |
+
+---
+
+## Certainty Tags (Chinese) | 確定性標籤（中文）
+
+When using AI assistants with Traditional Chinese documentation, use these Chinese equivalents of the certainty tags defined in `core/anti-hallucination.md`:
+
+與 AI 助手協作時，使用以下中文確定性標籤（對應 `core/anti-hallucination.md` 定義）：
+
+### Tag Mapping | 標籤對照
+
+| English Tag | 中文標籤 | Usage | 使用時機 |
+|-------------|---------|-------|----------|
+| `[Confirmed]` | `[已確認]` | Direct evidence from code/docs | 直接來自程式碼/文件的證據 |
+| `[Inferred]` | `[推論]` | Logical deduction from evidence | 基於現有證據的邏輯推論 |
+| `[Assumption]` | `[假設]` | Based on common patterns | 基於常見模式（需驗證）|
+| `[Unknown]` | `[未知]` | Information not available | 資訊不可得 |
+| `[Need Confirmation]` | `[待確認]` | Requires user clarification | 需要使用者澄清 |
+
+### Usage Examples | 使用範例
+
+**In Technical Documents | 技術文件中**:
+```markdown
+## 系統架構分析
+
+`[已確認]` 系統使用 ASP.NET Core 8.0 框架 [Source: Code] Program.cs:1
+`[已確認]` 資料庫採用 SQL Server [Source: Code] appsettings.json:12
+`[推論]` 基於 Repository Pattern 的使用，系統可能採用 DDD 架構
+`[假設]` 快取機制可能使用 Redis（需確認設定檔）
+`[待確認]` 是否需要支援多租戶架構？
+```
+
+**In Design Documents | 設計文件中**:
+```markdown
+## 設計決策
+
+### D1: 資料庫選擇
+
+**決策**：使用 PostgreSQL
+
+**理由**：
+- `[已確認]` 團隊已有 PostgreSQL 維運經驗 (使用者確認)
+- `[已確認]` 現有授權可用 (使用者確認)
+- `[推論]` JSON 欄位支援有助於彈性資料儲存
+```
+
+**In Code Review | 程式碼審查中**:
+```markdown
+## 審查意見
+
+`[已確認]` src/Services/AuthService.cs:45 - 密碼驗證缺少防暴力破解機制
+`[推論]` 此處可能需要加入 Rate Limiting
+`[待確認]` 是否已有其他層級的防護措施？
+```
+
+### Best Practices | 最佳實踐
+
+1. **Consistency | 一致性**
+   - 在同一份文件中使用同一語言的標籤（全用中文或全用英文）
+   - 團隊應在 `CONTRIBUTING.md` 中明確選擇使用的語言
+
+2. **Source Citation | 來源引用**
+   - 中文標籤同樣需要附上來源引用
+   - 格式：`[已確認]` 陳述 [Source: Code] 檔案路徑:行號
+
+3. **Team Agreement | 團隊共識**
+   - 在專案開始時決定使用中文或英文標籤
+   - 記錄於 `CONTRIBUTING.md` 或 `.standards/` 目錄
 
 ---
 
@@ -622,7 +690,8 @@ Maintain a **terminology glossary** for consistent Chinese translations:
 ## Version History | 版本歷史
 
 | Version | Date | Changes |
-|---------|------|---------|
+|---------|------|--------|
+| 1.2.0 | 2025-12-12 | Add Chinese certainty tags section with mapping table and usage examples 新增中文確定性標籤章節，包含對照表與使用範例 |
 | 1.1.0 | 2025-12-05 | Sync with commit-message-guide.md v1.2.0: Fix chore→維護 mapping; Add security/安全 type 與 commit-message-guide.md v1.2.0 同步：修正 chore→維護 對照；新增 security/安全 類型 |
 | 1.0.0 | 2025-11-12 | Initial Traditional Chinese standard |
 
@@ -632,6 +701,7 @@ Maintain a **terminology glossary** for consistent Chinese translations:
 
 - [Chinese Copywriting Guidelines](https://github.com/sparanoid/chinese-copywriting-guidelines)
 - [中文技術文件寫作規範](https://github.com/yikeke/zh-style-guide)
+- [Anti-Hallucination Standards](../core/anti-hallucination.md)
 
 ---
 
