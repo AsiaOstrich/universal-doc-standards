@@ -202,6 +202,10 @@ Next Major Release:
 
 ## Changelog Integration | 變更日誌整合
 
+> **See Also | 另見**: For comprehensive CHANGELOG writing guidelines, see [changelog-standards.md](changelog-standards.md).
+>
+> **另見**：完整的 CHANGELOG 撰寫指南，請參閱 [changelog-standards.md](changelog-standards.md)。
+
 ### CHANGELOG.md Format
 
 ```markdown

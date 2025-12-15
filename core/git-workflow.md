@@ -88,6 +88,10 @@ git push origin --delete feature/oauth-login
 
 #### 2. Release Preparation | 發布準備
 
+> **CHANGELOG Update | 變更日誌更新**: Move entries from `[Unreleased]` to the new version section and add the release date. See [changelog-standards.md](changelog-standards.md) for detailed guidelines.
+>
+> **變更日誌更新**：將 `[Unreleased]` 的條目移至新版本區段並加上發布日期。詳細指南請參閱 [changelog-standards.md](changelog-standards.md)。
+
 ```bash
 # Create release branch from develop
 git checkout develop
@@ -95,6 +99,8 @@ git pull origin develop
 git checkout -b release/v1.2.0
 
 # Prepare release (version bump, changelog, etc.)
+# 1. Update CHANGELOG.md: move [Unreleased] to [1.2.0] - YYYY-MM-DD
+# 2. Update version in package.json (or equivalent)
 npm version 1.2.0
 git add package.json CHANGELOG.md
 git commit -m "chore(release): prepare v1.2.0"

@@ -47,6 +47,7 @@ universal-doc-standards/
 │   ├── documentation-structure.md # Documentation organization
 │   ├── project-structure.md       # Project directory conventions
 │   ├── versioning.md              # Semantic versioning guide
+│   ├── changelog-standards.md     # Changelog writing guide
 │   └── testing-standards.md       # Testing standards (UT/IT/ST/E2E)
 │
 ├── extensions/                     # Optional extensions
@@ -188,6 +189,7 @@ cp templates/CHANGELOG.md.template your-project/CHANGELOG.md
 - ✅ `git-workflow.md` - Branching strategy
 - ✅ `code-review-checklist.md` - Review guidelines
 - ✅ `versioning.md` - Version management
+- ✅ `changelog-standards.md` - Changelog writing guide
 - ✅ `testing-standards.md` - Testing pyramid (UT/IT/ST/E2E)
 - ✅ Language-specific style guide (e.g., `csharp-style.md`)
 
@@ -501,6 +503,7 @@ All contributions must:
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.3.0 | 2025-12-15 | Added: changelog-standards.md; Updated: versioning.md, git-workflow.md (cross-references), zh-tw.md (terminology) |
 | 1.2.0 | 2025-12-11 | Added: project-structure.md; Updated: documentation-structure.md (file naming, version alignment), checkin-standards.md (directory hygiene) |
 | 1.1.0 | 2025-12-05 | Added: testing-standards.md (UT/IT/ST/E2E) |
 | 1.0.0 | 2025-11-12 | Initial release with core standards |

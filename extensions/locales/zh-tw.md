@@ -682,6 +682,11 @@ Maintain a **terminology glossary** for consistent Chinese translations:
 | API | API | Keep English |
 | SDK | SDK | Keep English |
 | Framework | 框架 | |
+| Changelog | 變更日誌 | |
+| Release Notes | 發布說明 | |
+| Breaking Change | 破壞性變更 | |
+| Deprecate | 棄用 | |
+| Semantic Versioning | 語義化版本 | |
 
 **Project-Specific Customization**: Create `docs/terminology.md` for your project.
 
