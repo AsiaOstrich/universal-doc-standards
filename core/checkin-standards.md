@@ -1,8 +1,8 @@
 # Code Check-in Standards
 # 程式碼簽入檢查點標準
 
-**Version**: 1.2.4
-**Last Updated**: 2025-12-11
+**Version**: 1.2.5
+**Last Updated**: 2025-12-16
 **Applicability**: All software projects using version control
 **適用範圍**: 所有使用版本控制的軟體專案
 
@@ -157,12 +157,14 @@ dotnet list package --vulnerable
   - Breaking changes noted
   - Setup instructions current
 
-- [ ] **CHANGELOG updated** | CHANGELOG 已更新
-  - Entry added for this change
-  - Version number correct
-  - Breaking changes highlighted
-  - Follow exclusion rules in `versioning.md` (ignore `.gitignore` directories)
-  - 遵循 `versioning.md` 排除規則（忽略 `.gitignore` 目錄）
+- [ ] **CHANGELOG updated (if applicable)** | CHANGELOG 已更新（如適用）
+  - For user-facing changes: entry added to `[Unreleased]` section
+  - 對於使用者可感知的變更：已新增條目至 `[Unreleased]` 區段
+  - Breaking changes marked with **BREAKING** prefix
+  - Follow exclusion rules in [versioning.md](versioning.md) and [changelog-standards.md](changelog-standards.md)
+  - 遵循 [versioning.md](versioning.md) 和 [changelog-standards.md](changelog-standards.md) 排除規則
+  - Note: Internal refactoring, test-only, docs-only changes typically don't need CHANGELOG entries
+  - 注意：內部重構、僅測試、僅文件的變更通常不需要 CHANGELOG 條目
 
 **Documentation Formats | 文件格式**:
 ```
@@ -958,6 +960,7 @@ git commit -m "feat(module-c): add export to CSV feature"
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.2.5 | 2025-12-16 | Clarified: CHANGELOG update is for user-facing changes only, added to [Unreleased] section |
 | 1.2.4 | 2025-12-11 | Added: Pre-commit directory hygiene section (IDE artifacts, verification commands) |
 | 1.2.3 | 2025-12-05 | Added: Reference to testing-standards.md |
 | 1.2.2 | 2025-12-04 | Updated: GitHub Actions checkout to v4 |

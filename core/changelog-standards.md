@@ -1,8 +1,8 @@
 # Changelog Standards
 # 變更日誌標準
 
-**Version**: 1.0.0
-**Last Updated**: 2025-12-15
+**Version**: 1.0.1
+**Last Updated**: 2025-12-16
 **Applicability**: All software projects with versioned releases
 **適用範圍**: 所有有版本發布的軟體專案
 
@@ -467,21 +467,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Exclusion Rules | 排除規則
 
+> **See Also | 另見**: For comprehensive exclusion rules, see [versioning.md](versioning.md#exclusion-rules--排除規則).
+>
+> **另見**：完整的排除規則，請參閱 [versioning.md](versioning.md#exclusion-rules--排除規則)。
+
+### Core Principle | 核心原則
+
+**Any file or directory listed in the project's `.gitignore` should NOT be recorded in CHANGELOG.**
+
+**任何在專案 `.gitignore` 中列出的目錄或檔案，都不應記錄在 CHANGELOG 中。**
+
+### Categories | 分類
+
 The following changes should **NOT** be recorded in CHANGELOG:
 
 以下變更**不應**記錄在 CHANGELOG：
 
 | Category | Examples | Reason | 原因 |
 |----------|----------|--------|------|
-| **Build outputs** | `dist/`, `build/`, `bin/` | Generated files | 產生的檔案 |
-| **Dependencies lock** | `package-lock.json`, `yarn.lock` | Auto-generated | 自動產生 |
-| **Local config** | `.env`, `*.local.json` | Environment-specific | 環境特定 |
-| **IDE settings** | `.vscode/`, `.idea/` | Developer preference | 開發者偏好 |
+| **Build outputs** | `dist/`, `build/`, `bin/`, `obj/` | Generated files | 產生的檔案 |
+| **Dependencies** | `node_modules/`, `packages/`, lock files | Auto-managed | 自動管理 |
+| **Local config** | `.env`, `*.local.json`, `appsettings.*.local.json` | Environment-specific | 環境特定 |
+| **IDE settings** | `.vscode/`, `.idea/`, `.cursor/` | Developer preference | 開發者偏好 |
+| **AI workspace** | `.claude/`, `.ai/` | Local development aids | 本地開發輔助 |
+| **Secrets** | `*.pem`, `*.key`, `credentials.*` | Security-sensitive | 安全敏感 |
 | **Internal refactoring** | Code style, variable names | No user impact | 無使用者影響 |
 
-**Note**: Check your `.gitignore` - files excluded from version control should not be in CHANGELOG.
+### Verification | 驗證
 
-**注意**：檢查您的 `.gitignore` - 被版本控制排除的檔案不應出現在 CHANGELOG。
+```bash
+# Check .gitignore exclusions before generating CHANGELOG
+cat .gitignore | grep -E "^[^#*]" | head -20
+
+# Verify recorded paths exist in version control
+git ls-files | grep -E "path/to/file"
+```
+
+**Note**: Each project should determine exclusions based on its own `.gitignore`. The table above provides common examples only.
+
+**注意**：每個專案應根據自己的 `.gitignore` 設定來決定排除項目。上表僅為常見範例。
 
 ---
 
@@ -566,6 +590,7 @@ Document your CHANGELOG practices in `CONTRIBUTING.md`:
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.0.1 | 2025-12-16 | Align exclusion rules with versioning.md, add cross-reference |
 | 1.0.0 | 2025-12-15 | Initial changelog standard |
 
 ---

@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Added | 新增
 - Add `changelog-standards.md` - Comprehensive changelog writing guide
   新增 `changelog-standards.md` - 完整的變更日誌撰寫指南
+- Add decision tree and selection matrix to `git-workflow.md` for workflow strategy selection
+  新增決策樹和選擇矩陣至 `git-workflow.md`，協助工作流程策略選擇
+- Add language selection guide to `commit-message-guide.md` for choosing commit message language
+  新增語言選擇指南至 `commit-message-guide.md`，協助選擇提交訊息語言
 
 ### Changed | 變更
 - Update `versioning.md` - Add cross-reference to changelog-standards.md
@@ -21,6 +25,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   更新 `git-workflow.md` - 在發布準備中新增 CHANGELOG 更新指南
 - Update `zh-tw.md` - Add terminology for Changelog, Release Notes, Breaking Change, Deprecate, Semantic Versioning
   更新 `zh-tw.md` - 新增術語：變更日誌、發布說明、破壞性變更、棄用、語義化版本
+- Update `changelog-standards.md` - Align exclusion rules with versioning.md, add cross-reference
+  更新 `changelog-standards.md` - 與 versioning.md 統一排除規則，新增交叉引用
+- Update `checkin-standards.md` - Clarify CHANGELOG updates apply to user-facing changes only
+  更新 `checkin-standards.md` - 釐清 CHANGELOG 更新僅適用於使用者可感知的變更
+- Update `code-review-checklist.md` - Align CHANGELOG section with changelog-standards.md
+  更新 `code-review-checklist.md` - 與 changelog-standards.md 統一 CHANGELOG 區段
+
+### Fixed | 修正
+- Fix inconsistent header format in `commit-message-guide.md` and `documentation-writing-standards.md`
+  修正 `commit-message-guide.md` 和 `documentation-writing-standards.md` 標頭格式不一致問題
+- Standardize cross-references to use markdown link format instead of backticks
+  統一交叉引用使用 markdown 連結格式而非反引號
 
 ## [1.2.0] - 2025-12-11
 

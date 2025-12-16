@@ -1,9 +1,10 @@
-# 文件撰寫規範 | Documentation Writing Standards
+# Documentation Writing Standards
+# 文件撰寫規範
 
-> **Version**: 1.0.0
-> **Last Updated**: 2025-12-10
-> **Applicability**: All software projects (new, refactoring, migration, maintenance)
-> **適用範圍**: 所有軟體專案（新建、重構、遷移、維護）
+**Version**: 1.0.0
+**Last Updated**: 2025-12-10
+**Applicability**: All software projects (new, refactoring, migration, maintenance)
+**適用範圍**: 所有軟體專案（新建、重構、遷移、維護）
 
 ---
 

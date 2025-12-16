@@ -1,8 +1,8 @@
 # Code Review Checklist
 # 程式碼審查檢查清單
 
-**Version**: 1.0.2
-**Last Updated**: 2025-12-04
+**Version**: 1.0.3
+**Last Updated**: 2025-12-16
 **Applicability**: All software projects with code review processes
 **適用範圍**: 所有進行程式碼審查的軟體專案
 
@@ -224,12 +224,12 @@ This standard provides a comprehensive checklist for reviewing code changes, ens
   - Setup instructions current
   - Examples provided
 
-- [ ] **CHANGELOG updated** | CHANGELOG 已更新
-  - Entry added for change
-  - Breaking changes highlighted
-  - Version number correct
-  - Follow exclusion rules in `versioning.md` (ignore `.gitignore` directories)
-  - 遵循 `versioning.md` 排除規則（忽略 `.gitignore` 目錄）
+- [ ] **CHANGELOG updated (if applicable)** | CHANGELOG 已更新（如適用）
+  - For user-facing changes: entry added to `[Unreleased]` section
+  - 對於使用者可感知的變更：已新增條目至 `[Unreleased]` 區段
+  - Breaking changes highlighted with **BREAKING** prefix
+  - Follow exclusion rules in [versioning.md](versioning.md) and [changelog-standards.md](changelog-standards.md)
+  - 遵循 [versioning.md](versioning.md) 和 [changelog-standards.md](changelog-standards.md) 排除規則
 
 ---
 
@@ -596,9 +596,9 @@ Comment Prefixes:
 
 | Version | Date | Changes |
 |---------|------|---------|
-| 1.0.3 | 2025-12-05 | Added: Reference to testing-standards.md |
-| 1.0.2 | 2025-12-04 | Updated: GitHub Actions checkout to v4 |
-| 1.0.1 | 2025-12-04 | Added: Cross-reference to versioning.md CHANGELOG exclusion rules |
+| 1.0.3 | 2025-12-16 | Clarified: CHANGELOG section aligned with changelog-standards.md, use markdown links for cross-references |
+| 1.0.2 | 2025-12-05 | Added: Reference to testing-standards.md |
+| 1.0.1 | 2025-12-04 | Updated: GitHub Actions checkout to v4, cross-reference to versioning.md |
 | 1.0.0 | 2025-11-12 | Initial code review checklist |
 
 ---

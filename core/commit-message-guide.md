@@ -1,9 +1,8 @@
-Commit Message Guide
-
+# Commit Message Guide
 # Commit 訊息規範指南
 
-**Version**: 1.2.1
-**Last Updated**: 2025-12-09
+**Version**: 1.2.2
+**Last Updated**: 2025-12-16
 **Applicability**: All projects using Git version control
 **適用範圍**: 所有使用 Git 版本控制的專案
 
@@ -124,6 +123,42 @@ Implement Google OAuth2 authentication flow for user login.
 
 Closes #123
 ```
+
+### Language Selection Guide | 語言選擇指南
+
+Use this guide to choose the appropriate commit message language for your project:
+
+使用此指南為您的專案選擇適當的 commit 訊息語言：
+
+| Factor | English | 繁體中文 | Bilingual 雙語 |
+|--------|---------|---------|----------------|
+| **Team composition** | International/mixed | Local (Taiwan) | Mixed with local focus |
+| **Tool compatibility** | ✅ Best | ⚠️ Limited | ✅ Good |
+| **Changelog automation** | ✅ Full support | ⚠️ Custom config | ✅ Supported |
+| **Onboarding** | Neutral | Easier for locals | Both benefit |
+| **Open source** | ✅ Recommended | ❌ Not recommended | ✅ Good choice |
+
+| 因素 | English | 繁體中文 | 雙語對照 |
+|------|---------|---------|----------|
+| **團隊組成** | 國際/混合 | 本地（台灣） | 混合但以本地為主 |
+| **工具相容性** | ✅ 最佳 | ⚠️ 有限 | ✅ 良好 |
+| **Changelog 自動化** | ✅ 完整支援 | ⚠️ 需自訂設定 | ✅ 支援 |
+| **新人上手** | 中立 | 本地成員較易上手 | 兩者皆受益 |
+| **開源專案** | ✅ 建議 | ❌ 不建議 | ✅ 好選擇 |
+
+**Quick Selection | 快速選擇**:
+- **Open source project** → English (Option A)
+- **開源專案** → 英文（選項 A）
+- **Local team, internal project** → Traditional Chinese (Option B)
+- **本地團隊、內部專案** → 繁體中文（選項 B）
+- **Local team with international collaboration** → Bilingual (Option C)
+- **本地團隊但有國際協作** → 雙語對照（選項 C）
+
+**Important | 重要**: Once chosen, **use consistently** across the entire project. Do not mix languages.
+
+**重要**：一旦選定，請在整個專案中**一致使用**。勿混用語言。
+
+---
 
 **Project Decision Point**: Document your choice in `CONTRIBUTING.md` (choose ONE):
 
@@ -939,6 +974,7 @@ Closes #123
 
 | Version | Date       | Changes                                                                                                                                                                                                                                              |
 | ------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1.2.2   | 2025-12-16 | Added: Language selection guide with decision matrix and quick selection tips 新增語言選擇指南，含決策矩陣和快速選擇提示 |
 | 1.2.1   | 2025-12-09 | Improve Option A/B/C format consistency: unify title style, add description text 改善 Option A/B/C 格式一致性：統一標題風格、新增描述文字 |
 | 1.2.0   | 2025-12-05 | Fix Option B type mapping (chore→維護); Add security type; Add scope naming rules; Clarify bilingual period exception; Improve templates 修正 Option B 類型對照（chore→維護）；新增 security 類型；新增 scope 命名規則；釐清雙語句點例外；改善範本 |
 | 1.1.0   | 2025-12-05 | Add Bilingual Mode (Option C) with examples 新增雙語對照模式（選項 C）與範例                                                                                                                                                                         |

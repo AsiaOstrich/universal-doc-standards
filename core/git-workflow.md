@@ -1,8 +1,8 @@
 # Git Workflow Standards
 # Git 工作流程標準
 
-**Version**: 1.1.0
-**Last Updated**: 2025-12-08
+**Version**: 1.2.0
+**Last Updated**: 2025-12-16
 **Applicability**: All projects using Git for version control
 **適用範圍**: 所有使用 Git 版本控制的專案
 
@@ -21,6 +21,80 @@ This standard defines Git branching strategies and workflows to ensure consisten
 **PROJECT MUST CHOOSE ONE** workflow strategy and document it clearly.
 
 **專案必須選擇一種**工作流程策略並明確記錄。
+
+### Decision Tree | 決策樹
+
+Use this flowchart to select the appropriate workflow:
+
+使用此流程圖來選擇適當的工作流程：
+
+```
+                    ┌─────────────────────────────────────┐
+                    │ How often do you deploy to         │
+                    │ production?                        │
+                    │ 您多常部署到正式環境？                │
+                    └───────────────┬─────────────────────┘
+                                    │
+            ┌───────────────────────┼───────────────────────┐
+            ▼                       ▼                       ▼
+   ┌────────────────┐    ┌────────────────┐    ┌────────────────┐
+   │ Multiple times │    │ Weekly to      │    │ Monthly or     │
+   │ per day        │    │ bi-weekly      │    │ longer         │
+   │ 每天多次        │    │ 每週或雙週      │    │ 每月或更久      │
+   └───────┬────────┘    └───────┬────────┘    └───────┬────────┘
+           │                     │                     │
+           ▼                     ▼                     ▼
+   ┌────────────────┐    ┌────────────────┐    ┌────────────────┐
+   │ Trunk-Based    │    │ GitHub Flow    │    │ GitFlow        │
+   │ Development    │    │                │    │                │
+   └────────────────┘    └────────────────┘    └────────────────┘
+```
+
+### Selection Matrix | 選擇矩陣
+
+| Factor | GitFlow | GitHub Flow | Trunk-Based |
+|--------|---------|-------------|-------------|
+| **Release frequency** | Monthly+ | Weekly | Multiple/day |
+| **Team size** | Large (10+) | Medium (5-15) | Small-Medium (3-10) |
+| **CI/CD maturity** | Basic | Intermediate | Advanced |
+| **Feature flags** | Optional | Optional | Required |
+| **Hotfix process** | Dedicated branch | Same as feature | Same as feature |
+| **Complexity** | High | Low | Medium |
+
+| 因素 | GitFlow | GitHub Flow | Trunk-Based |
+|------|---------|-------------|-------------|
+| **發布頻率** | 每月以上 | 每週 | 每天多次 |
+| **團隊規模** | 大型 (10+) | 中型 (5-15) | 小到中型 (3-10) |
+| **CI/CD 成熟度** | 基礎 | 中等 | 進階 |
+| **功能開關** | 選用 | 選用 | 必需 |
+| **緊急修復流程** | 專用分支 | 與功能相同 | 與功能相同 |
+| **複雜度** | 高 | 低 | 中 |
+
+### Quick Selection Guide | 快速選擇指南
+
+**Choose GitFlow if | 選擇 GitFlow 當**:
+- You have scheduled release cycles (monthly, quarterly)
+- 您有固定的發布週期（每月、每季）
+- You maintain multiple production versions simultaneously
+- 您同時維護多個正式版本
+- You have separate teams for development and release management
+- 您有獨立的開發團隊和發布管理團隊
+
+**Choose GitHub Flow if | 選擇 GitHub Flow 當**:
+- You deploy to production weekly or on-demand
+- 您每週或按需部署到正式環境
+- You have a single production version
+- 您只有單一正式版本
+- You want simplicity with good traceability
+- 您想要簡單且有良好追溯性的流程
+
+**Choose Trunk-Based if | 選擇 Trunk-Based 當**:
+- You have mature CI/CD with automated testing
+- 您有成熟的 CI/CD 和自動化測試
+- Your team practices continuous integration
+- 您的團隊實踐持續整合
+- You're comfortable with feature flags for incomplete features
+- 您習慣使用功能開關控制未完成的功能
 
 ---
 
@@ -812,6 +886,7 @@ git reset --hard <previous-commit-hash>
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.2.0 | 2025-12-16 | Added: Decision tree, selection matrix, and quick selection guide for workflow strategy |
 | 1.1.0 | 2025-12-08 | Add pre-branch checklist section with workflow-specific guidance |
 | 1.0.0 | 2025-11-12 | Initial Git workflow standard |
 
