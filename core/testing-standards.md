@@ -1,8 +1,8 @@
 # Testing Standards
 # 測試標準
 
-**Version**: 1.1.1
-**Last Updated**: 2025-12-11
+**Version**: 1.2.0
+**Last Updated**: 2025-12-19
 **Applicability**: All software projects
 **適用範圍**: 所有軟體專案
 
@@ -194,6 +194,23 @@ describe('UserValidator', () => {
 Tests interactions between multiple components, modules, or external systems.
 
 測試多個元件、模組或外部系統之間的互動。
+
+### When Integration Tests Are Required | 何時必須有整合測試
+
+| Scenario | 情境 | Reason | 原因 |
+|----------|------|--------|------|
+| Query predicates | 查詢條件 | Mocks cannot verify filter expressions | Mock 無法驗證過濾表達式 |
+| Entity relationships | 實體關聯 | Verify foreign key correctness | 驗證外鍵正確性 |
+| Composite keys | 複合主鍵 | In-memory DB may differ from real DB | 記憶體資料庫行為可能與真實資料庫不同 |
+| Field mapping | 欄位映射 | DTO ↔ Entity transformations | DTO 與 Entity 轉換 |
+| Pagination | 分頁 | Row ordering and counting | 資料排序與計數 |
+| Transactions | 交易 | Rollback behavior | 回滾行為 |
+
+**Decision Rule | 判斷規則**:
+If your unit test uses a wildcard matcher (`any()`, `It.IsAny<>`, `Arg.Any<>`)
+for a query/filter parameter, that functionality MUST have an integration test.
+
+如果你的單元測試對查詢/過濾參數使用萬用匹配器，該功能必須有整合測試。
 
 ### Characteristics | 特性
 
@@ -535,6 +552,62 @@ test.describe('User Registration Journey', () => {
 
 ---
 
+## Mock Limitations | Mock 限制
+
+### Query Predicate Verification | 查詢條件驗證
+
+**Problem | 問題**:
+When mocking repository methods that accept query predicates (e.g., lambda expressions,
+filter functions), using wildcard matchers like `any()` ignores the actual query logic,
+allowing incorrect queries to pass unit tests.
+
+當 Mock 接受查詢條件的 Repository 方法時（如 lambda 表達式、過濾函式），
+使用萬用匹配器如 `any()` 會忽略實際的查詢邏輯，讓錯誤的查詢通過單元測試。
+
+**Example | 範例**:
+
+```python
+# Python Example
+# ❌ This test cannot verify query correctness
+# ❌ 這個測試無法驗證查詢正確性
+mock_repo.find.return_value = users
+# Query could be wrong, test still passes
+# 查詢可能寫錯，測試仍會通過
+
+# ✓ Add integration test to verify actual query
+# ✓ 新增整合測試驗證實際查詢
+```
+
+```typescript
+// TypeScript Example
+// ❌ Jest mock ignores actual filter
+// ❌ Jest mock 忽略實際的過濾條件
+jest.spyOn(repo, 'findBy').mockResolvedValue(users);
+
+// ✓ Verify with integration test
+// ✓ 用整合測試驗證
+```
+
+```csharp
+// C# Example
+// ❌ Moq ignores the actual expression
+// ❌ Moq 忽略實際的表達式
+_repo.Setup(r => r.FindAsync(It.IsAny<Expression<Func<User, bool>>>()))
+     .ReturnsAsync(users);
+
+// ✓ Verify with integration test or use It.Is<> to validate
+// ✓ 用整合測試驗證，或使用 It.Is<> 來驗證
+```
+
+**Rule of Thumb | 經驗法則**:
+If your unit test mocks a method that accepts a query/filter/predicate parameter,
+you MUST have a corresponding integration test to verify the query logic.
+
+如果你的單元測試 Mock 了一個接受查詢/過濾/條件參數的方法，
+你必須有對應的整合測試來驗證查詢邏輯。
+
+---
+
 ## Test Data Management | 測試資料管理
 
 ### Principles | 原則
@@ -594,6 +667,104 @@ var inactiveUser = new UserBuilder()
     .WithName("Inactive User")
     .Inactive()
     .Build();
+```
+
+### Distinct Identifiers | 區分識別欄位
+
+When entities have both a surrogate key (auto-generated ID) and a business identifier
+(e.g., employee number, department code), test data MUST use different values for each.
+
+當實體同時有代理鍵（自動產生的 ID）和業務識別碼（如員工編號、部門代碼）時，
+測試資料必須使用不同的值。
+
+**Problem | 問題**:
+If test data uses identical values for both fields, field mapping errors go undetected.
+
+如果測試資料在兩個欄位使用相同的值，欄位映射錯誤將無法被發現。
+
+```python
+# Python Example
+# ❌ Wrong: id equals business_code
+# ❌ 錯誤：id 與 business_code 相同
+dept = Department(id=1, business_code=1)
+
+# ✓ Correct: distinct values catch mapping errors
+# ✓ 正確：不同的值能抓到映射錯誤
+dept = Department(id=1, business_code=1001)
+```
+
+```csharp
+// C# Example
+// ❌ Wrong: Id equals DeptId - mapping errors go undetected
+// ❌ 錯誤：Id 與 DeptId 相同 - 映射錯誤不會被發現
+var dept = new Department { Id = 1, DeptId = 1 };
+
+// ✓ Correct: distinct values catch field mapping bugs
+// ✓ 正確：不同的值能抓到欄位映射錯誤
+var dept = new Department { Id = 1, DeptId = 1001 };
+```
+
+**Validation | 驗證**:
+```python
+# Python
+assert entity.id != entity.business_code, \
+    "Test precondition: ID must differ from business code"
+```
+
+```csharp
+// C#
+testData.Dept.Id.Should().NotBe(testData.Dept.DeptId,
+    "Test precondition: Id must differ from business identifier");
+```
+
+### Composite Keys | 複合主鍵
+
+For entities with composite primary keys, ensure each record has a unique key combination.
+
+對於使用複合主鍵的實體，確保每筆記錄有唯一的主鍵組合。
+
+```python
+# Python Example
+from datetime import timedelta
+
+# ❌ Key collision
+# ❌ 主鍵衝突
+record1 = Record(id=0, timestamp=now)
+record2 = Record(id=0, timestamp=now)  # Conflict!
+
+# ✓ Unique combinations
+# ✓ 唯一組合
+record1 = Record(id=0, timestamp=now + timedelta(seconds=1))
+record2 = Record(id=0, timestamp=now + timedelta(seconds=2))
+```
+
+```csharp
+// C# Example
+// ❌ Key collision - same (Id, SendTime) combination
+// ❌ 主鍵衝突 - 相同的 (Id, SendTime) 組合
+var batch1 = new BatchRecord { Id = 0, SendTime = now };
+var batch2 = new BatchRecord { Id = 0, SendTime = now };  // Conflict!
+
+// ✓ Unique combinations
+// ✓ 唯一組合
+var batch1 = new BatchRecord { Id = 0, SendTime = now.AddSeconds(1) };
+var batch2 = new BatchRecord { Id = 0, SendTime = now.AddSeconds(2) };
+```
+
+**Tip | 提示**: Create helper functions that auto-generate unique composite keys.
+
+**提示**：建立自動產生唯一複合主鍵的輔助函式。
+
+```csharp
+// C# Helper Example
+private static int _timeOffset = 0;
+public static BatchRecord CreateWithUniqueKey(DateTime baseTime)
+{
+    return new BatchRecord
+    {
+        SendTime = baseTime.AddSeconds(Interlocked.Increment(ref _timeOffset))
+    };
+}
 ```
 
 ---
@@ -906,6 +1077,9 @@ public void MethodName_Scenario_ExpectedBehavior()
 
 ❌ Magic Numbers/Strings (魔術數字/字串)
    Unexplained values in test code
+
+❌ Identical Test IDs (相同測試識別碼)
+   Using same values for surrogate and business keys
 ```
 
 ---
@@ -938,6 +1112,11 @@ public void MethodName_Scenario_ExpectedBehavior()
 │  Line: 70% min / 85% recommended                            │
 │  Branch: 60% min / 80% recommended                          │
 │  Function: 80% min / 90% recommended                        │
+├─────────────────────────────────────────────────────────────┤
+│               Mock Limitation Rule                           │
+├─────────────────────────────────────────────────────────────┤
+│  If UT mocks query/filter params → IT is REQUIRED           │
+│  若單元測試 Mock 查詢參數 → 必須有整合測試                  │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -956,6 +1135,7 @@ public void MethodName_Scenario_ExpectedBehavior()
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.2.0 | 2025-12-19 | Add: Mock Limitations section, When Integration Tests Are Required, Distinct Identifiers, Composite Keys test data patterns |
 | 1.1.1 | 2025-12-11 | Improved: System test example to use generic domain concepts instead of specific business terminology |
 | 1.1.0 | 2025-12-05 | Add test environment isolation section (venv, containers) |
 | 1.0.0 | 2025-12-05 | Initial testing standards with UT/IT/ST/E2E coverage |
