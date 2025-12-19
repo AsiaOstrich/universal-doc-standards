@@ -10,6 +10,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased] | 未發布
 
+## [1.3.1] - 2025-12-19
+
+### Added | 新增
+- Add Mock Limitations section to `testing-standards.md` - Guidelines for when mocks require integration tests
+  新增 Mock 限制章節至 `testing-standards.md` - Mock 需要整合測試的指南
+- Add Test Data Management patterns to `testing-standards.md` - Distinct identifiers and composite key guidelines
+  新增測試資料管理模式至 `testing-standards.md` - 識別碼區分與複合鍵指南
+- Add "When Integration Tests Are Required" table to `testing-standards.md` - 6 scenarios requiring integration tests
+  新增「何時需要整合測試」表格至 `testing-standards.md` - 6 種必須整合測試的情境
+
 ## [1.3.0] - 2025-12-16
 
 ### Added | 新增
@@ -84,7 +94,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Integrations: OpenSpec framework
   整合：OpenSpec 框架
 
-[Unreleased]: https://github.com/AsiaOstrich/universal-doc-standards/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/AsiaOstrich/universal-doc-standards/compare/v1.3.1...HEAD
+[1.3.1]: https://github.com/AsiaOstrich/universal-doc-standards/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/AsiaOstrich/universal-doc-standards/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/AsiaOstrich/universal-doc-standards/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/AsiaOstrich/universal-doc-standards/compare/v1.0.0...v1.1.0

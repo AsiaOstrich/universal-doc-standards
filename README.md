@@ -1,8 +1,8 @@
 # Universal Documentation Standards
 # 通用文件規範
 
-**Version**: 1.2.0
-**Last Updated**: 2025-12-11
+**Version**: 1.3.1
+**Last Updated**: 2025-12-19
 **License**: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 
 ---
