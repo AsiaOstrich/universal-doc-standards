@@ -68,6 +68,11 @@ universal-doc-standards/
 │       └── (coming soon)
 │
 ├── integrations/                   # Tool integrations
+│   ├── cline/                     # Cline integration
+│   ├── cursor/                    # Cursor integration
+│   ├── github-copilot/            # GitHub Copilot integration
+│   ├── google-antigravity/        # Google Antigravity integration
+│   ├── windsurf/                  # Windsurf integration
 │   └── openspec/                  # OpenSpec framework
 │       ├── AGENTS.md
 │       ├── commands/
