@@ -5,8 +5,8 @@ import { dirname, join } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Path to the standards registry
-const REGISTRY_PATH = join(__dirname, '../../../adoption/standards-registry.json');
+// Path to the standards registry (bundled with CLI package)
+const REGISTRY_PATH = join(__dirname, '../../standards-registry.json');
 
 let registryCache = null;
 

@@ -1,21 +1,23 @@
 import { existsSync, mkdirSync, copyFileSync, readFileSync, writeFileSync } from 'fs';
 import { dirname, join, basename } from 'path';
 import { fileURLToPath } from 'url';
+import { downloadStandard, downloadIntegration } from './github.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Root of the universal-doc-standards repository
+// Root of the universal-doc-standards repository (for local development)
 const REPO_ROOT = join(__dirname, '../../..');
 
 /**
  * Copy a standard file to the target project
+ * Falls back to downloading from GitHub if local file not found
  * @param {string} sourcePath - Relative path from repo root (e.g., 'core/anti-hallucination.md')
  * @param {string} targetDir - Target directory (usually '.standards')
  * @param {string} projectPath - Project root path
- * @returns {Object} Result with success status and copied path
+ * @returns {Promise<Object>} Result with success status and copied path
  */
-export function copyStandard(sourcePath, targetDir, projectPath) {
+export async function copyStandard(sourcePath, targetDir, projectPath) {
   const source = join(REPO_ROOT, sourcePath);
   const targetFolder = join(projectPath, targetDir);
   const targetFile = join(targetFolder, basename(sourcePath));
@@ -25,40 +27,37 @@ export function copyStandard(sourcePath, targetDir, projectPath) {
     mkdirSync(targetFolder, { recursive: true });
   }
 
-  // Check if source exists
-  if (!existsSync(source)) {
-    return {
-      success: false,
-      error: `Source file not found: ${sourcePath}`,
-      path: null
-    };
+  // Try local copy first
+  if (existsSync(source)) {
+    try {
+      copyFileSync(source, targetFile);
+      return {
+        success: true,
+        error: null,
+        path: targetFile
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message,
+        path: null
+      };
+    }
   }
 
-  // Copy the file
-  try {
-    copyFileSync(source, targetFile);
-    return {
-      success: true,
-      error: null,
-      path: targetFile
-    };
-  } catch (error) {
-    return {
-      success: false,
-      error: error.message,
-      path: null
-    };
-  }
+  // Fall back to downloading from GitHub
+  return downloadStandard(sourcePath, targetDir, projectPath);
 }
 
 /**
  * Copy an integration file to its target location
+ * Falls back to downloading from GitHub if local file not found
  * @param {string} sourcePath - Source path relative to repo root
  * @param {string} targetPath - Target path relative to project root
  * @param {string} projectPath - Project root path
- * @returns {Object} Result
+ * @returns {Promise<Object>} Result
  */
-export function copyIntegration(sourcePath, targetPath, projectPath) {
+export async function copyIntegration(sourcePath, targetPath, projectPath) {
   const source = join(REPO_ROOT, sourcePath);
   const target = join(projectPath, targetPath);
 
@@ -68,30 +67,26 @@ export function copyIntegration(sourcePath, targetPath, projectPath) {
     mkdirSync(targetDir, { recursive: true });
   }
 
-  // Check if source exists
-  if (!existsSync(source)) {
-    return {
-      success: false,
-      error: `Source file not found: ${sourcePath}`,
-      path: null
-    };
+  // Try local copy first
+  if (existsSync(source)) {
+    try {
+      copyFileSync(source, target);
+      return {
+        success: true,
+        error: null,
+        path: target
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message,
+        path: null
+      };
+    }
   }
 
-  // Copy the file
-  try {
-    copyFileSync(source, target);
-    return {
-      success: true,
-      error: null,
-      path: target
-    };
-  } catch (error) {
-    return {
-      success: false,
-      error: error.message,
-      path: null
-    };
-  }
+  // Fall back to downloading from GitHub
+  return downloadIntegration(sourcePath, targetPath, projectPath);
 }
 
 /**

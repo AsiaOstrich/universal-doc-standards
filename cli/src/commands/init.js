@@ -174,7 +174,7 @@ export async function initCommand(options) {
   );
 
   for (const std of referenceStandards) {
-    const result = copyStandard(std.source, '.standards', projectPath);
+    const result = await copyStandard(std.source, '.standards', projectPath);
     if (result.success) {
       results.standards.push(std.source);
     } else {
@@ -190,7 +190,7 @@ export async function initCommand(options) {
 
     for (const lang of languages) {
       if (EXTENSION_MAPPINGS[lang]) {
-        const result = copyStandard(EXTENSION_MAPPINGS[lang], '.standards', projectPath);
+        const result = await copyStandard(EXTENSION_MAPPINGS[lang], '.standards', projectPath);
         if (result.success) {
           results.extensions.push(EXTENSION_MAPPINGS[lang]);
         } else {
@@ -201,7 +201,7 @@ export async function initCommand(options) {
 
     for (const fw of frameworks) {
       if (EXTENSION_MAPPINGS[fw]) {
-        const result = copyStandard(EXTENSION_MAPPINGS[fw], '.standards', projectPath);
+        const result = await copyStandard(EXTENSION_MAPPINGS[fw], '.standards', projectPath);
         if (result.success) {
           results.extensions.push(EXTENSION_MAPPINGS[fw]);
         } else {
@@ -211,7 +211,7 @@ export async function initCommand(options) {
     }
 
     if (locale && EXTENSION_MAPPINGS[locale]) {
-      const result = copyStandard(EXTENSION_MAPPINGS[locale], '.standards', projectPath);
+      const result = await copyStandard(EXTENSION_MAPPINGS[locale], '.standards', projectPath);
       if (result.success) {
         results.extensions.push(EXTENSION_MAPPINGS[locale]);
       } else {
@@ -229,7 +229,7 @@ export async function initCommand(options) {
     for (const int of integrations) {
       const mapping = INTEGRATION_MAPPINGS[int];
       if (mapping) {
-        const result = copyIntegration(mapping.source, mapping.target, projectPath);
+        const result = await copyIntegration(mapping.source, mapping.target, projectPath);
         if (result.success) {
           results.integrations.push(mapping.target);
         } else {

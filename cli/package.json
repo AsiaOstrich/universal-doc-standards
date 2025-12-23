@@ -1,6 +1,6 @@
 {
   "name": "universal-doc-standards",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "CLI tool for adopting Universal Documentation Standards",
   "keywords": [
     "documentation",
@@ -13,7 +13,7 @@
   "license": "(MIT AND CC-BY-4.0)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AsiaOstrich/universal-doc-standards.git",
+    "url": "git+https://github.com/AsiaOstrich/universal-doc-standards.git",
     "directory": "cli"
   },
   "homepage": "https://github.com/AsiaOstrich/universal-doc-standards#readme",
@@ -23,12 +23,13 @@
   "type": "module",
   "main": "src/index.js",
   "bin": {
-    "uds": "./bin/uds.js",
-    "universal-doc-standards": "./bin/uds.js"
+    "uds": "bin/uds.js",
+    "universal-doc-standards": "bin/uds.js"
   },
   "files": [
     "bin",
     "src",
+    "standards-registry.json",
     "README.md"
   ],
   "engines": {

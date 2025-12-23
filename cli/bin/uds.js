@@ -9,7 +9,7 @@ import { updateCommand } from '../src/commands/update.js';
 program
   .name('uds')
   .description('CLI tool for adopting Universal Documentation Standards')
-  .version('1.0.0');
+  .version('1.0.3');
 
 program
   .command('list')
