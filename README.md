@@ -42,6 +42,7 @@ universal-doc-standards/
 │   ├── anti-hallucination.md      # AI collaboration guidelines
 │   ├── checkin-standards.md       # Code check-in quality gates
 │   ├── commit-message-guide.md    # Commit message conventions
+│   ├── spec-driven-development.md # ✅ SDD methodology & standards
 │   ├── git-workflow.md            # Git branching strategies
 │   ├── code-review-checklist.md   # Code review guidelines
 │   ├── documentation-structure.md # Documentation organization
@@ -182,6 +183,7 @@ cp templates/CHANGELOG.md.template your-project/CHANGELOG.md
 - ✅ `anti-hallucination.md` - AI collaboration guidelines
 - ✅ `checkin-standards.md` - Quality gates before commit
 - ✅ `commit-message-guide.md` - Standardized commit format
+- ✅ `spec-driven-development.md` - Spec-Driven Development standards
 
 **Estimated Setup Time**: 30 minutes
 **Recommended For**: All projects, especially AI-assisted development
