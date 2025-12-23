@@ -227,4 +227,9 @@ This CLI works alongside [universal-dev-skills](https://github.com/AsiaOstrich/u
 
 ## License
 
-MIT
+This project uses a **dual-license** model:
+
+| Content Type | License |
+|-------------|---------|
+| Documentation (`*.md`) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) |
+| Code (`*.js`, etc.) | [MIT](https://opensource.org/licenses/MIT) |
