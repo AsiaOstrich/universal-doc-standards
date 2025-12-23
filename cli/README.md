@@ -4,13 +4,40 @@ CLI tool for adopting Universal Documentation Standards in your projects.
 
 ## Installation
 
-```bash
-# Using npx (no installation required)
-npx universal-doc-standards init
+### Option 1: Clone and Run Locally (Recommended)
 
-# Or install globally
-npm install -g universal-doc-standards
+```bash
+# Clone the repository
+git clone https://github.com/AsiaOstrich/universal-doc-standards.git
+
+# Navigate to CLI directory
+cd universal-doc-standards/cli
+
+# Install dependencies
+npm install
+
+# Run directly
+node bin/uds.js list
+node bin/uds.js init
+```
+
+### Option 2: Global Link (for frequent use)
+
+```bash
+# In the cli directory
+cd universal-doc-standards/cli
+npm link
+
+# Now available globally
+uds list
 uds init
+```
+
+### Option 3: npx (when published to npm)
+
+```bash
+# Not yet published - use Option 1 or 2 for now
+npx universal-doc-standards init
 ```
 
 ## Commands
@@ -115,26 +142,31 @@ uds update --yes
 ## Example Workflow
 
 ```bash
-# 1. Navigate to your project
+# 1. Clone and setup CLI (one-time)
+git clone https://github.com/AsiaOstrich/universal-doc-standards.git
+cd universal-doc-standards/cli && npm install && npm link
+cd ~
+
+# 2. Navigate to your project
 cd my-project
 
-# 2. Initialize standards (interactive)
-npx universal-doc-standards init
+# 3. Initialize standards (interactive)
+uds init
 # ? Select adoption level: Level 2: Recommended
 # ? Detected PHP project. Select style guides: PHP Style Guide
 # ? Select AI tool integrations: Cursor, GitHub Copilot
 # ? Install Claude Code Skills? Yes
 
-# 3. Review what was created
+# 4. Review what was created
 ls .standards/
 # checkin-standards.md
 # spec-driven-development.md
 # manifest.json
 
-# 4. Check status anytime
+# 5. Check status anytime
 uds check
 
-# 5. Update when new version is available
+# 6. Update when new version is available
 uds update
 ```
 

@@ -126,6 +126,22 @@ cd universal-dev-skills
 
 📖 See [Adoption Guide](adoption/ADOPTION-GUIDE.md) for complete guidance and checklists.
 
+### Using CLI Tool | 使用 CLI 工具
+
+```bash
+# Clone and setup CLI (one-time)
+git clone https://github.com/AsiaOstrich/universal-doc-standards.git
+cd universal-doc-standards/cli && npm install && npm link
+
+# In your project directory
+cd your-project
+uds init    # Interactive initialization
+uds check   # Check adoption status
+uds update  # Update to latest version
+```
+
+📖 See [CLI README](cli/README.md) for detailed CLI usage.
+
 ---
 
 ## 🚀 Quick Start | 快速開始
