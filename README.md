@@ -87,6 +87,47 @@ universal-doc-standards/
 
 ---
 
+## 🔗 Standards Adoption | 規範採用
+
+### Using with Claude Code (Recommended) | 搭配 Claude Code 使用（推薦）
+
+If you use Claude Code, install **[universal-dev-skills](https://github.com/AsiaOstrich/universal-dev-skills)** for interactive AI assistance:
+
+如果您使用 Claude Code，安裝 **[universal-dev-skills](https://github.com/AsiaOstrich/universal-dev-skills)** 獲得互動式 AI 輔助：
+
+```bash
+git clone https://github.com/AsiaOstrich/universal-dev-skills.git
+cd universal-dev-skills
+./install.sh
+```
+
+### Standards Coverage | 規範涵蓋範圍
+
+| Standard | Skill Available | Adoption |
+|----------|----------------|----------|
+| anti-hallucination.md | ✅ ai-collaboration-standards | Install Skill |
+| commit-message-guide.md | ✅ commit-standards | Install Skill |
+| code-review-checklist.md | ✅ code-review-assistant | Install Skill |
+| git-workflow.md | ✅ git-workflow-guide | Install Skill |
+| versioning.md + changelog-standards.md | ✅ release-standards | Install Skill |
+| testing-standards.md | ✅ testing-guide | Install Skill |
+| documentation-structure.md | ✅ documentation-guide | Install Skill |
+| requirement templates | ✅ requirement-assistant | Install Skill |
+| **checkin-standards.md** | ❌ | Copy to project |
+| **spec-driven-development.md** | ❌ | Copy to project |
+| **documentation-writing-standards.md** | ❌ | Copy to project |
+| **project-structure.md** | ❌ | Copy to project |
+| Language/Framework extensions | ❌ | Copy if applicable |
+| AI tool integrations | ❌ | Copy to tool location |
+
+> **Important**: For standards with Skills available, use the Skill OR copy the source document — **never both**.
+>
+> **重要**：對於有 Skill 的規範，使用 Skill 或複製原始文件 — **擇一即可，不要兩者都做**。
+
+📖 See [Adoption Guide](adoption/ADOPTION-GUIDE.md) for complete guidance and checklists.
+
+---
+
 ## 🚀 Quick Start | 快速開始
 
 ### Step 1: Choose Core Standards | 選擇核心規範
