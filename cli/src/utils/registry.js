@@ -103,3 +103,21 @@ export function getReferenceStandards() {
   const registry = loadRegistry();
   return registry.standards.filter(s => !s.skillName && s.category === 'reference');
 }
+
+/**
+ * Get skill files mapping
+ * @returns {Object} Mapping of skill names to their file paths
+ */
+export function getSkillFiles() {
+  const registry = loadRegistry();
+  return registry.skillFiles || {};
+}
+
+/**
+ * Get all skill names
+ * @returns {string[]} Array of skill names
+ */
+export function getAllSkillNames() {
+  const registry = loadRegistry();
+  return Object.keys(registry.skillFiles || {});
+}

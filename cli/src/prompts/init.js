@@ -2,6 +2,81 @@ import inquirer from 'inquirer';
 import chalk from 'chalk';
 
 /**
+ * Prompt for installation mode
+ * @returns {Promise<string>} 'skills' or 'full'
+ */
+export async function promptInstallMode() {
+  const { mode } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'mode',
+      message: 'Select installation mode:',
+      choices: [
+        {
+          name: `${chalk.green('Skills Mode')} ${chalk.gray('(推薦)')} - Use Claude Code Skills`,
+          value: 'skills'
+        },
+        {
+          name: `${chalk.yellow('Full Mode')} - Install all standards without Skills`,
+          value: 'full'
+        }
+      ],
+      default: 'skills'
+    }
+  ]);
+
+  // Show explanation based on selection
+  console.log();
+  if (mode === 'skills') {
+    console.log(chalk.gray('  → Skills will be installed to ~/.claude/skills/'));
+    console.log(chalk.gray('  → Only static standards will be copied to .standards/'));
+  } else {
+    console.log(chalk.gray('  → All standards will be copied to .standards/'));
+    console.log(chalk.gray('  → No Skills will be installed'));
+  }
+  console.log();
+
+  return mode;
+}
+
+/**
+ * Prompt for Skills upgrade action
+ * @param {string} installedVersion - Currently installed version (may be null)
+ * @param {string} latestVersion - Latest available version
+ * @returns {Promise<string>} 'upgrade', 'keep', or 'reinstall'
+ */
+export async function promptSkillsUpgrade(installedVersion, latestVersion) {
+  const versionDisplay = installedVersion
+    ? `v${installedVersion} → v${latestVersion}`
+    : `unknown → v${latestVersion}`;
+
+  const { action } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'action',
+      message: `Skills detected (${versionDisplay}). What would you like to do?`,
+      choices: [
+        {
+          name: `${chalk.green('Upgrade')} - Update to latest version`,
+          value: 'upgrade'
+        },
+        {
+          name: `${chalk.gray('Keep')} - Keep current version`,
+          value: 'keep'
+        },
+        {
+          name: `${chalk.yellow('Reinstall')} - Fresh install (overwrites existing)`,
+          value: 'reinstall'
+        }
+      ],
+      default: 'upgrade'
+    }
+  ]);
+
+  return action;
+}
+
+/**
  * Prompt for adoption level
  * @returns {Promise<number>} Selected level
  */
@@ -148,23 +223,6 @@ export async function promptIntegrations(detected) {
   ]);
 
   return integrations;
-}
-
-/**
- * Prompt for Claude Code Skills installation
- * @returns {Promise<boolean>} True if should install
- */
-export async function promptSkills() {
-  const { installSkills } = await inquirer.prompt([
-    {
-      type: 'confirm',
-      name: 'installSkills',
-      message: 'Install Claude Code Skills (universal-dev-skills)?',
-      default: true
-    }
-  ]);
-
-  return installSkills;
 }
 
 /**

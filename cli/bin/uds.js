@@ -21,11 +21,11 @@ program
 program
   .command('init')
   .description('Initialize standards in current project')
+  .option('-m, --mode <mode>', 'Installation mode (skills, full)')
   .option('-l, --level <level>', 'Adoption level (1=Essential, 2=Recommended, 3=Enterprise)')
   .option('--lang <language>', 'Language extension (csharp, php)')
   .option('--framework <framework>', 'Framework extension (fat-free)')
   .option('--locale <locale>', 'Locale extension (zh-tw)')
-  .option('--no-skills', 'Skip Claude Code Skills installation')
   .option('-y, --yes', 'Use defaults, skip interactive prompts')
   .action(initCommand);
 

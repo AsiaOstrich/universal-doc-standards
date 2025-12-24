@@ -12,8 +12,50 @@
     "skills": {
       "name": "universal-dev-skills",
       "url": "https://github.com/AsiaOstrich/universal-dev-skills",
+      "rawUrl": "https://raw.githubusercontent.com/AsiaOstrich/universal-dev-skills/main",
       "version": "1.1.0"
     }
+  },
+  "skillFiles": {
+    "ai-collaboration-standards": [
+      "skills/ai-collaboration-standards/SKILL.md",
+      "skills/ai-collaboration-standards/anti-hallucination.md",
+      "skills/ai-collaboration-standards/certainty-labels.md"
+    ],
+    "commit-standards": [
+      "skills/commit-standards/SKILL.md",
+      "skills/commit-standards/conventional-commits.md",
+      "skills/commit-standards/language-options.md"
+    ],
+    "code-review-assistant": [
+      "skills/code-review-assistant/SKILL.md",
+      "skills/code-review-assistant/checkin-checklist.md",
+      "skills/code-review-assistant/review-checklist.md"
+    ],
+    "testing-guide": [
+      "skills/testing-guide/SKILL.md",
+      "skills/testing-guide/testing-pyramid.md"
+    ],
+    "release-standards": [
+      "skills/release-standards/SKILL.md",
+      "skills/release-standards/changelog-format.md",
+      "skills/release-standards/semantic-versioning.md"
+    ],
+    "git-workflow-guide": [
+      "skills/git-workflow-guide/SKILL.md",
+      "skills/git-workflow-guide/branch-naming.md",
+      "skills/git-workflow-guide/git-workflow.md"
+    ],
+    "documentation-guide": [
+      "skills/documentation-guide/SKILL.md",
+      "skills/documentation-guide/documentation-structure.md",
+      "skills/documentation-guide/readme-template.md"
+    ],
+    "requirement-assistant": [
+      "skills/requirement-assistant/SKILL.md",
+      "skills/requirement-assistant/requirement-checklist.md",
+      "skills/requirement-assistant/requirement-writing.md"
+    ]
   },
   "categories": {
     "skill": {
